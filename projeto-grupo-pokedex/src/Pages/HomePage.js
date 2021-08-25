@@ -7,6 +7,7 @@ import styled from "styled-components"
 export const HomePage = (props) => {
     const history = useHistory();
     const [listPokemons, setListPokemons] = useState([])
+   
 
 
     const goToMypokemons = () => {
@@ -18,7 +19,6 @@ export const HomePage = (props) => {
     }
 
 
-   
     
     useEffect(() => {
         axios.get('https://pokeapi.co/api/v2/pokemon' ,{})
@@ -34,7 +34,8 @@ export const HomePage = (props) => {
         return(
             <div key={pokemon.name}>
                 <p>{pokemon.name}</p> 
-                <button onClick={() => props.addPokemons(pokemon.name)}>Adicionar Pokemon</button>     
+                <button onClick={ () => props.addListPokemon(pokemon.name)}>Adicionar Pokemon</button>   
+                 
             </div>
         )
     })
