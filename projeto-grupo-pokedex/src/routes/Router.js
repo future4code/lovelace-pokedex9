@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { HomePage } from "../Pages/HomePage";
 import { Mypokemons } from "../Pages/Mypokemons";
@@ -6,12 +7,14 @@ import { PokeDetails } from "../Pages/PokeDetails";
 
 export const Router = () => {
 
-    const [pokedex , setPokedex] = useState([])
+    const [myPokemons , setMyPokemons] = useState([])
+    const [listPokemons, setListPokemons] = useState([])
 
 
     const addListPokemon = (pokemon) => {
         const newPokemon = pokemon
-        const isPokemonInPokedex = pokedex.find((pokemonInPokedex) => {
+        
+        const isPokemonInPokedex = myPokemons.find((pokemonInPokedex) => {
             if(pokemonInPokedex === pokemon){
                 return true;
             } else {
@@ -22,29 +25,45 @@ export const Router = () => {
         if (isPokemonInPokedex) {
             alert('Você ja tem esse pokemom!')
         } else {
-            const newListPokemon = [...pokedex, newPokemon]
-            setPokedex(newListPokemon)
+            const newListPokemon = [...myPokemons, newPokemon]
+            setMyPokemons(newListPokemon)
+            console.log(newListPokemon)
         }
     }
 
     const removePokemon = (pokemon) => {
         
-        let existPokemon = pokedex.find((pokemonInPokedex) => {
-            if(pokemonInPokedex === pokemon) {
-                return false
-            } else {
+        const newListPokemon = myPokemons.filter((pokemonInPokedex) => {
+            if(pokemon === pokemonInPokedex) {
+             return  false
+            } else{
                 return true
             }
         })
-
-        if(existPokemon) {
-            let newListPokemon = pokedex.filter((pokemonInPokedex) => {
-                
-            })
-            return newListPokemon
-        }
-        setPokedex(newListPokemon)
+        setMyPokemons(newListPokemon)
     }
+
+    const renderMyListPokemon = myPokemons.map((pokemon) => {
+        return(
+           <div key={pokemon.name}>
+               <p>{pokemon.name}</p> 
+               <button onClick={ () =>removePokemon(pokemon)}>remover pokemon</button> 
+           </div>
+           )
+   
+    }) 
+
+    
+
+    useEffect(() => {
+        axios.get('https://pokeapi.co/api/v2/pokemon' ,{})
+        .then((res) => {
+            console.log(res.data.results)
+            setListPokemons(res.data.results)
+        }).catch((err) => {
+            alert(`Tem algo errrado: ${err}`)
+        })
+    },[])
     
 
     return (
@@ -53,18 +72,22 @@ export const Router = () => {
 
         <Route exact path={"/"}>
             <HomePage
+            listPokemons = {listPokemons}
             addListPokemon={addListPokemon}/>
         </Route>
 
         <Route exact path={"/mypokemons"}>
             <Mypokemons
-            pokedex = {pokedex}
+            renderMyListPokemon = {renderMyListPokemon}
+            
             removePokemon = {removePokemon}
             />
         </Route>
 
-        <Route exact path={"/detailspoke"}>
-            <PokeDetails/>
+        <Route exact path={"/detalhes/:nome"}>
+            <PokeDetails
+            myPokemons={myPokemons}
+            />
         </Route>
         </Switch>
         
