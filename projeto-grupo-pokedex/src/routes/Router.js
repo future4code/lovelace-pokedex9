@@ -51,7 +51,7 @@ export const Router = () => {
             <Mypokemons/>
         </Route>
 
-        <Route exact path={"/detailspoke"}>
+        <Route exact path={"/detailspoke/:nome"}>
             <PokeDetails/>
         </Route>
         </Switch>

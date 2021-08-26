@@ -13,8 +13,8 @@ export const HomePage = (props) => {
         history.push("/mypokemons")
     }
 
-    const goToDetailsPokemon = () => {
-        history.push("/detailspoke")
+    const goToDetailsPokemon = (name) => {
+        history.push(`/detailspoke/${name}`)
     }
 
 
@@ -34,7 +34,8 @@ export const HomePage = (props) => {
         return(
             <div key={pokemon.name}>
                 <p>{pokemon.name}</p> 
-                <button onClick={() => props.addPokemons(pokemon.name)}>Adicionar Pokemon</button>     
+                <button onClick={() => props.addPokemons(pokemon.name)}>Adicionar Pokemon</button>  
+                <button onClick={() => {goToDetailsPokemon(pokemon.name)}}>Ver detalhes</button>   
             </div>
         )
     })
