@@ -85,9 +85,7 @@ export const Router = () => {
         </Route>
 
         <Route exact path={"/detalhes/:nome"}>
-            <PokeDetails
-            myPokemons={myPokemons}
-            />
+            <PokeDetails/>
         </Route>
         </Switch>
         

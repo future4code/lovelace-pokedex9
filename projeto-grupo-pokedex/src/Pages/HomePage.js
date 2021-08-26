@@ -25,7 +25,7 @@ export const HomePage = (props) => {
             <div
              key={pokemon.name}>
                 <p>{pokemon.name}</p>
-                <button onClick={ () => props.addListPokemon(pokemon)}>Adicionar Pokemon</button>
+                <button onClick={ () => props.addListPokemon(pokemon.name)}>Adicionar Pokemon</button>
                 <button onClick={() => goToDetailsPokemon(pokemon.name)}>Detalhes do Pokemon</button>   
                  
             </div>
