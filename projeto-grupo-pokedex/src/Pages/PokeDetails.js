@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components"
+import {Screen} from "./StyledPokeDetails"
 
 
 export const PokeDetails = () => {
@@ -9,8 +10,8 @@ export const PokeDetails = () => {
     
 
     return (
-        <div>
+        <Screen>
             <p>Detalhes Pokemon</p>
-        </div>
+        </Screen>
     )
 }
