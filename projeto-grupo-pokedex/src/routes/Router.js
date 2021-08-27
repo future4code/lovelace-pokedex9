@@ -12,7 +12,7 @@ export const Router = () => {
 
 
     const addListPokemon = (pokemon) => {
-        const newPokemon = pokemon
+        const newPokemon = {pokemon}
         
         const isPokemonInPokedex = myPokemons.find((pokemonInPokedex) => {
             if(pokemonInPokedex === pokemon){
