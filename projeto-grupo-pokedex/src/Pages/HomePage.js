@@ -2,39 +2,32 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components"
+import { PokeDetails } from "./PokeDetails";
 
 
 export const HomePage = (props) => {
     const history = useHistory();
-    const [listPokemons, setListPokemons] = useState([])
+    
+   
 
 
     const goToMypokemons = () => {
         history.push("/mypokemons")
     }
 
-    const goToDetailsPokemon = () => {
-        history.push("/detailspoke")
+    const goToDetailsPokemon = (name) => {
+        history.push(`/detalhes/${name}`)
     }
 
 
-   
-    
-    useEffect(() => {
-        axios.get('https://pokeapi.co/api/v2/pokemon' ,{})
-        .then((res) => {
-            console.log(res.data.results)
-            setListPokemons(res.data.results)
-        }).catch((err) => {
-            alert(`Tem algo errrado: ${err}`)
-        })
-    },[])
-
-    const renderListPokemons = listPokemons.map((pokemon) => {
+    const renderListPokemons = props.listPokemons.map((pokemon) => {
         return(
-            <div key={pokemon.name}>
-                <p>{pokemon.name}</p> 
-                <button onClick={() => props.addPokemons(pokemon.name)}>Adicionar Pokemon</button>     
+            <div
+             key={pokemon.name}>
+                <p>{pokemon.name}</p>
+                <button onClick={ () => props.addListPokemon(pokemon.name)}>Adicionar Pokemon</button>
+                <button onClick={() => goToDetailsPokemon(pokemon.name)}>Detalhes do Pokemon</button>   
+                 
             </div>
         )
     })
